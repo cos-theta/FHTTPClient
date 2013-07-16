@@ -121,7 +121,8 @@ withParameters:(NSDictionary*)parameters
 
 -(id)deserializeResponse:(id)obj
 {
-    NSAssert(obj, @"obj cannot be nil");
+    if (!obj)
+		return nil;
     NSError *jsonError = nil;
 	id response = [NSJSONSerialization JSONObjectWithData:obj options:kNilOptions error:&jsonError];
 	return response;
