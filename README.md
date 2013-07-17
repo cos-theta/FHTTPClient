@@ -24,13 +24,13 @@ If you are using FHTTPClient in your non-arc project, you will need to set a `-f
 To set a compiler flag in Xcode, go to your active target and select the "Build Phases" tab. Now select all FHTTPClient source files, press Enter, insert `-fobjc-arc` and then "Done" to enable ARC for FHTTPClient.
 
 ##Usage
-We love rocking your blocks off.  If you don't have a good understanding of using block you may want to check out Apple's [Blocks Programming Topics](http://developer.apple.com/library/ios/#documentation/cocoa/Conceptual/Blocks/Articles/00_Introduction.html) before using this codebase.
+We love rocking your blocks off.  If you don't have a good understanding of using blocks you may want to check out Apple's [Blocks Programming Topics](http://developer.apple.com/library/ios/#documentation/cocoa/Conceptual/Blocks/Articles/00_Introduction.html) before using this codebase.
 
 Using FHTTPClient is fairly straightforward.  Once you include your import (`#import "FHTTPClient.h"`) in your code, you can use the library as follows:
 
 ###GET
 
-```
+```objective-c
 FHTTPClient* client = [[FHTTPClient alloc] initWithBaseUrl:baseUrl];
 [client get:path withParameters:_parameters success:^(FResponse *response) {
 		//Process your response
@@ -41,11 +41,19 @@ FHTTPClient* client = [[FHTTPClient alloc] initWithBaseUrl:baseUrl];
 ];
 
 ```
-Where:
+####Where:
 
-1. baseUrl is an NSURL with the protocol, address or domain, and port.
+1. baseUrl is an`NSURL` with the protocol, address or domain, and port.
 2. path is the route you wish to invoke.
-3. parameters is a name/value collection of parameters to pass either via a query string in a GET or DELETE call or inside the body of the message in the case of a POST or a PUT.
+3. parameters is a name/value collection of parameters to pass either via a query string in a `GET` or `DELETE` call or inside the body of the message in the case of a `POST` or a `PUT`.
+
+####Options and Notes:
+
+1. Use `[client setToken:{TOKEN}]` to set the Authorization header with a Bearer token.
+2. The library turns on GZIP compression by default.  To turn off compfression set the useCompression BOOL to `NO`.
+3. Change your Content Type by calling `[client setContentType:{TYPE}]`. (Default value is `"application/json"`)
+4. Change your Accept Type by calling [client setAccept:{TYPE}]. (Default value is `"application/json"`)
+5. Adjust your timeout by calling [client setTimeout:{DOUBLE}].  (Default value is `30`)
 
 ##Contributions
 Contributions to this repository are welcomed with open arms.  Pull requests are reviewed constantly.  Please feel free to fork and customize or improve as you see fit!
