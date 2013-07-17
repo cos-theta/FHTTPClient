@@ -30,6 +30,7 @@ typedef void(^FFailureBlock)		(FResponse* response, NSError* error);
 @property (nonatomic, copy) NSString *accept;
 @property (nonatomic, copy) NSString *token;
 @property (nonatomic) double timeout;
+@property (nonatomic) BOOL useCompression;
 
 #pragma mark - Initialization
 
@@ -38,6 +39,21 @@ typedef void(^FFailureBlock)		(FResponse* response, NSError* error);
 #pragma mark - HTTP Methods
 
 -(void) get:(NSString*)method
+withParameters:(NSDictionary*)parameters
+	success:(FSuccessBlock)success
+	failure:(FFailureBlock)failure;
+
+-(void) post:(NSString*)method
+withParameters:(NSDictionary*)parameters
+	success:(FSuccessBlock)success
+	failure:(FFailureBlock)failure;
+
+-(void) put:(NSString*)method
+withParameters:(NSDictionary*)parameters
+	success:(FSuccessBlock)success
+	failure:(FFailureBlock)failure;
+
+-(void) delete:(NSString*)method
 withParameters:(NSDictionary*)parameters
 	success:(FSuccessBlock)success
 	failure:(FFailureBlock)failure;

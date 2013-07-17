@@ -44,7 +44,8 @@ static NSMutableArray *sharedConnections;
 #pragma mark NSURLConnectionDelegate
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-	self.response = response;
+	NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
+	_responseCode = [httpResponse statusCode];
     self.data = [[NSMutableData alloc] init];
 }
 
@@ -53,6 +54,7 @@ static NSMutableArray *sharedConnections;
 }
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection {
+	
     if(self.completionBlock)
         self.completionBlock(self.data,nil);
     [sharedConnections removeObject:self];

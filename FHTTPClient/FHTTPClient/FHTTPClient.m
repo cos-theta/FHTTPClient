@@ -15,7 +15,7 @@
 
 @interface FHTTPClient ()
 
-@property (nonatomic, strong) FConnection *connection;
+@property (nonatomic, retain) FConnection *connection;
 @property (nonatomic, retain) NSURL *baseUrl;
 
 @end
@@ -45,6 +45,7 @@ static NSString *urlEncode(id object) {
 	_accept = @"application/json";
 	_contentType = @"application/json";
 	_timeout = 30;
+	_useCompression = YES;
 }
 
 #pragma mark - HTTP Methods
@@ -54,6 +55,27 @@ withParameters:(NSDictionary*)parameters
 	success:(FSuccessBlock)success
 	failure:(FFailureBlock)failure {
 	[self send:method withVerb:GET withParameters:parameters success:success failure:failure];
+}
+
+-(void) post:(NSString*)method
+withParameters:(NSDictionary*)parameters
+	success:(FSuccessBlock)success
+	failure:(FFailureBlock)failure {
+	[self send:method withVerb:POST withParameters:parameters success:success failure:failure];
+}
+
+-(void) put:(NSString*)method
+withParameters:(NSDictionary*)parameters
+	success:(FSuccessBlock)success
+	failure:(FFailureBlock)failure {
+	[self send:method withVerb:PUT withParameters:parameters success:success failure:failure];
+}
+
+-(void) delete:(NSString*)method
+withParameters:(NSDictionary*)parameters
+	success:(FSuccessBlock)success
+	failure:(FFailureBlock)failure {
+	[self send:method withVerb:DELETE withParameters:parameters success:success failure:failure];
 }
 
 #pragma mark - Internal
@@ -106,6 +128,8 @@ withParameters:(NSDictionary*)parameters
 												timeoutInterval:_timeout];
 	[request setHTTPMethod:verbString];
     [request setAllHTTPHeaderFields:headers];
+	if (_useCompression)
+		[request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
     if (parameters)
         [request setHTTPBody:body];
 	

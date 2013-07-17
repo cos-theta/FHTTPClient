@@ -12,7 +12,7 @@
 @interface FResponse : NSObject
 
 @property (nonatomic) NSInteger status;
-@property (nonatomic, retain) id response;
+@property (nonatomic) id response;
 
 - (id) initWithStatus:(NSInteger)status
           andResponse:(id)response;
