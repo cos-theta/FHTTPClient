@@ -25,6 +25,8 @@ typedef void(^FFailureBlock)		(FResponse* response, NSError* error);
 
 @interface FHTTPClient : NSObject
 
+
+@property (nonatomic, copy) NSString *userAgent;
 @property (nonatomic, copy) NSString *mimeType;
 @property (nonatomic, copy) NSString *contentType;
 @property (nonatomic, copy) NSString *accept;

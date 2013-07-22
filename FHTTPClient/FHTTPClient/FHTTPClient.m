@@ -123,6 +123,9 @@ withParameters:(NSDictionary*)parameters
 	if (_token)
 		[headers setObject:[NSString stringWithFormat:@"Bearer %@", _token] forKey:@"Authorization"];
 	
+	if (_userAgent)
+		[headers setObject:_userAgent forKey:@"User-Agent"];
+	
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
 													cachePolicy:NSURLCacheStorageNotAllowed
 												timeoutInterval:_timeout];
