@@ -59,8 +59,8 @@ withParameters:(NSDictionary*)parameters
 
 -(void) post:(NSString*)method
 withParameters:(NSDictionary*)parameters
-	success:(FSuccessBlock)success
-	failure:(FFailureBlock)failure {
+	 success:(FSuccessBlock)success
+	 failure:(FFailureBlock)failure {
 	[self send:method withVerb:POST withParameters:parameters success:success failure:failure];
 }
 
@@ -73,8 +73,8 @@ withParameters:(NSDictionary*)parameters
 
 -(void) delete:(NSString*)method
 withParameters:(NSDictionary*)parameters
-	success:(FSuccessBlock)success
-	failure:(FFailureBlock)failure {
+	   success:(FSuccessBlock)success
+	   failure:(FFailureBlock)failure {
 	[self send:method withVerb:DELETE withParameters:parameters success:success failure:failure];
 }
 
@@ -106,8 +106,11 @@ withParameters:(NSDictionary*)parameters
 		switch (verb) {
 			case POST:
 			case PUT: {
-				_contentType = @"application/x-www-form-urlencoded; charset=utf-8";
-				body = [[self urlEncodedStringFromDictionary:parameters] dataUsingEncoding:NSUTF8StringEncoding];
+				NSData *jsonData = [NSJSONSerialization dataWithJSONObject:parameters
+																   options:NSJSONWritingPrettyPrinted
+																	 error:nil];
+				
+				body = jsonData;
 				break;
 			}
 			default: {
@@ -127,8 +130,8 @@ withParameters:(NSDictionary*)parameters
 		[headers setObject:_userAgent forKey:@"User-Agent"];
 	
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-													cachePolicy:NSURLCacheStorageNotAllowed
-												timeoutInterval:_timeout];
+														   cachePolicy:NSURLCacheStorageNotAllowed
+													   timeoutInterval:_timeout];
 	[request setHTTPMethod:verbString];
     [request setAllHTTPHeaderFields:headers];
 	if (_useCompression)
