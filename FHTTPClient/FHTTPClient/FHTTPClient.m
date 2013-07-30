@@ -42,10 +42,9 @@ static NSString *urlEncode(id object) {
 }
 
 -(void)baseInit {
-	_accept = @"application/json";
-	_contentType = @"application/json";
 	_timeout = 30;
 	_useCompression = YES;
+    _headers = [NSMutableDictionary dictionaryWithDictionary:@{@"Content-Type" : @"application/json", @"Accept" : @"application/json", @"Cache-Control" : @"no-cache", @"Pragma" : @"no-cache", @"Connection" : @"close" }];
 }
 
 #pragma mark - HTTP Methods
@@ -121,19 +120,19 @@ withParameters:(NSDictionary*)parameters
 		}
 	}
 	
-	NSMutableDictionary *headers = [NSMutableDictionary dictionaryWithDictionary:@{@"Content-Type" : _contentType, @"Accept" : _accept, @"Cache-Control" : @"no-cache", @"Pragma" : @"no-cache", @"Connection" : @"close" }];
+	NSMutableDictionary *requestHeaders = [NSMutableDictionary dictionaryWithDictionary:_headers];
 	
 	if (_token)
-		[headers setObject:[NSString stringWithFormat:@"Bearer %@", _token] forKey:@"Authorization"];
+		[requestHeaders setObject:[NSString stringWithFormat:@"Bearer %@", _token] forKey:@"Authorization"];
 	
 	if (_userAgent)
-		[headers setObject:_userAgent forKey:@"User-Agent"];
+		[requestHeaders setObject:_userAgent forKey:@"User-Agent"];
 	
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
 														   cachePolicy:NSURLCacheStorageNotAllowed
 													   timeoutInterval:_timeout];
 	[request setHTTPMethod:verbString];
-    [request setAllHTTPHeaderFields:headers];
+    [request setAllHTTPHeaderFields:requestHeaders];
 	if (_useCompression)
 		[request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
     if (parameters)

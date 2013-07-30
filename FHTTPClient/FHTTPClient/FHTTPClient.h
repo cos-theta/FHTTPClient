@@ -25,11 +25,10 @@ typedef void(^FFailureBlock)		(FResponse* response, NSError* error);
 
 @interface FHTTPClient : NSObject
 
+@property (nonatomic, retain) NSMutableDictionary *headers;
 
 @property (nonatomic, copy) NSString *userAgent;
 @property (nonatomic, copy) NSString *mimeType;
-@property (nonatomic, copy) NSString *contentType;
-@property (nonatomic, copy) NSString *accept;
 @property (nonatomic, copy) NSString *token;
 @property (nonatomic) double timeout;
 @property (nonatomic) BOOL useCompression;
