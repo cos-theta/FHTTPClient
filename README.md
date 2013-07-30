@@ -51,8 +51,7 @@ FHTTPClient* client = [[FHTTPClient alloc] initWithBaseUrl:baseUrl];
 
 1. Use `[client setToken:{TOKEN}]` to set the Authorization header with a Bearer token.
 2. The library turns on GZIP compression by default.  To turn off compfression set the useCompression BOOL to `NO`.
-3. Change your Content Type by calling `[client setContentType:{TYPE}]`. (Default value is `"application/json"`)
-4. Change your Accept Type by calling [client setAccept:{TYPE}]. (Default value is `"application/json"`)
+3. Default value is `"application/json"` for both the Content-Type and Accept header.  To change, set the key and value as appropriate on the `header` property.
 5. Adjust your timeout by calling [client setTimeout:{DOUBLE}].  (Default value is `30`)
 
 ##Contributions
