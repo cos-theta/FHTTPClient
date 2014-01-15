@@ -54,6 +54,9 @@ FHTTPClient* client = [[FHTTPClient alloc] initWithBaseUrl:baseUrl];
 3. Default value is `"application/json"` for both the Content-Type and Accept header.  To change, set the key and value as appropriate on the `header` property.
 5. Adjust your timeout by calling [client setTimeout:{DOUBLE}].  (Default value is `30`)
 
+##Limitations
+This codebase is wired to to support only JSON in POST and PUT requests. Feel free to contribute if you'd like to extend the code to handle other formats.  
+
 ##Contributions
 Contributions to this repository are welcomed with open arms.  Pull requests are reviewed constantly.  Please feel free to fork and customize or improve as you see fit!
 
